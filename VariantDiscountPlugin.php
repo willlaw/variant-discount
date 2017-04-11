@@ -109,28 +109,4 @@ class VariantDiscountPlugin extends BasePlugin
     {
         return false;
     }
-
-    /**
-     */
-    public function onBeforeInstall()
-    {
-    }
-
-    /**
-     */
-    public function onAfterInstall()
-    {
-    }
-
-    /**
-     */
-    public function onBeforeUninstall()
-    {
-    }
-
-    /**
-     */
-    public function onAfterUninstall()
-    {
-    }
 }
