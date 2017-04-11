@@ -21,20 +21,21 @@ class VariantDiscountPlugin extends BasePlugin
     public function init()
     {
         parent::init();
-		/*  So far this would only be called when the discount has matched with everything else about the product. */
-		craft()->on('commerce_discounts.onBeforeMatchLineItem',
-		function($event){
-		   $lineItem = $event->params['lineItem'];
-		   $discount = $event->params['discount'];
-		
-		    if (stripos($discount->description, 'only') === false) {
-		        return; /* do nothing, and let the discount match as it normally would, because the discount does not have 'only' in the description. */
-		    }else{
-		        if (stripos($discount->description, $lineItem->sku) === false) {
-		            $event->performAction = false; /* since this SKU is not in the description string, then don't apply this discount */
-		        }
-		    }
-		});
+
+        /*  So far this would only be called when the discount has matched with everything else about the product. */
+        craft()->on('commerce_discounts.onBeforeMatchLineItem',
+        function($event){
+            $lineItem = $event->params['lineItem'];
+            $discount = $event->params['discount'];
+
+            if (stripos($discount->description, 'only') === false) {
+               return; /* do nothing, and let the discount match as it normally would, because the discount does not have 'only' in the description. */
+            } else {
+                if (stripos($discount->description, $lineItem->sku) === false) {
+                    $event->performAction = false; /* since this SKU is not in the description string, then don't apply this discount */
+                }
+            }
+        });
     }
 
     /**
