@@ -2,7 +2,6 @@
 
 Discount is limited to specific variant SKU&#39;s by searching the discount description field for the keyword &#39;ONLY&#39; and the variant&#39;s SKU. e.g. Discount ONLY applies to SKU78439 and SKU94300
 
-![Screenshot](resources/screenshots/plugin_logo.png)
 
 ## Installation
 
