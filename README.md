@@ -14,23 +14,3 @@ To install Variant Discount, follow these steps:
 5. The plugin folder should be named `variantdiscount` for Craft to see it.  GitHub recently started appending `-master` (the branch name) to the name of the folder for zip file downloads.
 
 Variant Discount works on Craft 2.4.x and Craft 2.5.x.
-
-## Variant Discount Overview
-
--Insert text here-
-
-## Configuring Variant Discount
-
--Insert text here-
-
-## Using Variant Discount
-
--Insert text here-
-
-## Variant Discount Roadmap
-
-Some things to do, and ideas for potential features:
-
-* Release it
-
-Brought to you by [Luke Holder](http://craftcms.stackexchange.com/users/91/luke-holder)
