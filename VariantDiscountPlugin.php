@@ -2,13 +2,13 @@
 /**
  * Variant Discount plugin for Craft CMS
  *
- * Discount is limited to specific variant SKU&#39;s by searching the discount description field for the keyword &#39;ONLY&#39; and the variant&#39;s SKU. e.g. Discount ONLY applies to SKU78439 and SKU94300
+ * Discount and Sales are limited to specific variant SKUs by searching the discount description field for the keyword 'ONLY' and the variant's SKU. e.g. Discount ONLY applies to SKU78439 and SKU94300
  *
  * @author    Luke Holder
  * @copyright Copyright (c) 2017 Luke Holder
  * @link      http://craftcms.stackexchange.com/users/91/luke-holder
  * @package   VariantDiscount
- * @since     1.0.0
+ * @since     1.0.1
  */
 
 namespace Craft;
@@ -21,8 +21,9 @@ class VariantDiscountPlugin extends BasePlugin
     public function init()
     {
         parent::init();
-
-        /*  So far this would only be called when the discount has matched with everything else about the product. */
+        
+        /* Function: Applies Discounts to specific line items */
+        /*  This would only be called when the discount has matched with everything else about the product. */
         craft()->on('commerce_discounts.onBeforeMatchLineItem',
         function($event){
             $lineItem = $event->params['lineItem'];
@@ -36,6 +37,24 @@ class VariantDiscountPlugin extends BasePlugin
                 }
             }
         });
+
+
+        /* Function: Applies Sales logic to specific variants (Currently broken) */
+        craft()->on('commerce_sales.onBeforeMatchProductAndSale',
+        function($event){
+            $cart = craft()->commerce_cart->getCart();
+            $product = $event->params['product'];
+            $sale = $event->params['sale'];
+
+            if (stripos($sale->description, 'only') === false) {
+               return; /* do nothing, and let the sale match as it normally would, because the sale does not have 'only' in the description. */
+            } else {
+                if (stripos($sale->description, $product->sku) === false) {
+                    $event->performAction = false; /* since this SKU is not in the description string, then don't apply this discount */
+                }
+            }
+        });
+        
     }
 
     /**
