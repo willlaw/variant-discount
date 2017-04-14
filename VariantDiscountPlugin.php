@@ -42,7 +42,6 @@ class VariantDiscountPlugin extends BasePlugin
         /* Function: Applies Sales logic to specific variants (Currently broken) */
         craft()->on('commerce_sales.onBeforeMatchProductAndSale',
         function($event){
-            $cart = craft()->commerce_cart->getCart();
             $product = $event->params['product'];
             $sale = $event->params['sale'];
 
