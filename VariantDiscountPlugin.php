@@ -44,11 +44,14 @@ class VariantDiscountPlugin extends BasePlugin
         function($event){
             $product = $event->params['product'];
             $sale = $event->params['sale'];
+            
+            /* Attempt to try and get the variants of the product - this makes everything deathly slow and breaks the page - and doesn't work :( */
+            $variants = $product->getVariants();
 
             if (stripos($sale->description, 'only') === false) {
                return; /* do nothing, and let the sale match as it normally would, because the sale does not have 'only' in the description. */
             } else {
-                if (stripos($sale->description, $product->sku) === false) {
+                if (stripos($sale->description, $variants->sku) === false) {
                     $event->performAction = false; /* since this SKU is not in the description string, then don't apply this discount */
                 }
             }
