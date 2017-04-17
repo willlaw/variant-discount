@@ -45,12 +45,12 @@ class VariantDiscountPlugin extends BasePlugin
             $sale = $event->params['sale'];
 
             $criteria = craft()->elements->getCriteria('Commerce_Variant');
-			$allVariants = $criteria->find();
-			$allSkus = "";
-			foreach ($allVariants as $variant)
-			{
-			    $allSkus .= ' ' . $variant->sku;
-			}
+            $allVariants = $criteria->find();
+            $allSkus = "";
+            foreach ($allVariants as $variant)
+            {
+                $allSkus .= ' ' . $variant->sku;
+            }
 
             if (stripos($sale->description, 'only') === false) {
                return; /* do nothing, and let the sale match as it normally would, because the sale does not have 'only' in the description. */
