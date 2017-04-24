@@ -43,19 +43,14 @@ class VariantDiscountPlugin extends BasePlugin
         craft()->on('commerce_sales.onBeforeMatchProductAndSale',
         function($event){
             $sale = $event->params['sale'];
-
-            $criteria = craft()->elements->getCriteria('Commerce_Variant');
-            $allVariants = $criteria->find();
-            $allSkus = "";
-            foreach ($allVariants as $variant)
-            {
-                $allSkus .= ' ' . $variant->sku;
-            }
+			$product = $event->params['product'];
+			$criteria = craft()->elements->getCriteria('Commerce_Variant');
+			$criteria->productId = $product->id;
 
             if (stripos($sale->description, 'only') === false) {
-               return; /* do nothing, and let the sale match as it normally would, because the sale does not have 'only' in the description. */
+               return; /* do nothing, and let the discount match as it normally would, because the discount does not have 'only' in the description. */
             } else {
-                if (stripos($sale->description, $allSkus) === false) {
+                if (stripos($sale->description, $criteria->sku) === false) {
                     $event->performAction = false; /* since this SKU is not in the description string, then don't apply this discount */
                 }
             }
